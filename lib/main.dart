@@ -14,6 +14,17 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  TextEditingController weightController = TextEditingController();
+  TextEditingController heightController = TextEditingController();
+
+  String _infoText = "Informe seus dados!";
+
+  void _resetFields(){
+      weightController.text = "";
+      heightController.text = "";
+      _infoText = "Resetado!";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +36,7 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
         actions: <Widget>[
-          IconButton(onPressed: () {}, icon: Icon(Icons.refresh))
+          IconButton(onPressed: _resetFields, icon: Icon(Icons.refresh))
         ],
       ),
       backgroundColor: Colors.white,
@@ -35,26 +46,28 @@ class _HomeState extends State<Home> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Icon(Icons.person_outline, size: 120.0, color: Colors.green),
-            const TextField(
+            TextField(
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Peso (KG)",
                 labelStyle: TextStyle(color: Colors.green, fontSize: 25.0),
               ),
               textAlign: TextAlign.center,
+              controller: weightController,
             ),
-            const TextField(
+            TextField(
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Altura (CM)",
                 labelStyle: TextStyle(color: Colors.green, fontSize: 25.0),
               ),
               textAlign: TextAlign.center,
+              controller: heightController,
             ),
             Padding(
-              padding: const EdgeInsets.only(top:10.0, bottom: 10.0),
+              padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
               child: Container(
-                height:50.0,
+                height: 50.0,
                 child: ElevatedButton(
                   onPressed: add,
                   child: Text(
@@ -69,8 +82,11 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            Text("Info", textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.green, fontSize: 25.0),)
+            Text(
+              _infoText,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.green, fontSize: 25.0),
+            )
           ],
         ),
       ),
